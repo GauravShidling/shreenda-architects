@@ -8,6 +8,10 @@ import cafe1 from '../assets/projects/commercial-cafe/Cafe1.jpg';
 import cafe2 from '../assets/projects/commercial-cafe/Cafe2.jpg';
 import venue1 from '../assets/projects/commercial-event-spaces/Venue1.jpeg';
 
+// Import team photos
+import vishalPhoto from '../assets/team/VishalShibargatti.jpg';
+import vinayPhoto from '../assets/team/VinayShidling.png';
+
 export const projects = [
   {
     id: 1,
@@ -186,13 +190,13 @@ export const team = [
     name: "Vishal Shibargatti",
     position: "Co-founder & Principal Architect",
     bio: "With a keen eye for design and a passion for innovation, Vishal brings creative vision to every project. His expertise in blending aesthetics with functionality ensures that each design not only looks beautiful but works perfectly for its intended purpose.",
-    imageSrc: "https://via.placeholder.com/300x400?text=Vishal+Shibargatti"
+    imageSrc: vishalPhoto
   },
   {
     id: 2,
     name: "Vinay Shidling",
     position: "Co-founder & Principal Head of Execution",
     bio: "Vinay's exceptional project management skills and attention to detail ensure that designs move seamlessly from concept to completion. His expertise in construction processes and materials brings practicality and feasibility to our most ambitious designs.",
-    imageSrc: "https://via.placeholder.com/300x400?text=Vinay+Shidling"
+    imageSrc: vinayPhoto
   }
 ]; 
