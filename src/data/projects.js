@@ -187,13 +187,13 @@ export const team = [
     name: "Vishal Shibargatti",
     position: "Co-founder & Principal Architect",
     bio: "With a keen eye for design and a passion for innovation, Vishal brings creative vision to every project. His expertise in blending aesthetics with functionality ensures that each design not only looks beautiful but works perfectly for its intended purpose.",
-    imageSrc: "/images/team/VishalShibargatti.jpg"
+    imageSrc: "https://raw.githubusercontent.com/GauravShidling/shreenda-architects/main/src/assets/team/VishalShibargatti.jpg"
   },
   {
     id: 2,
     name: "Vinay Shidling",
     position: "Co-founder & Principal Head of Execution",
     bio: "Vinay's exceptional project management skills and attention to detail ensure that designs move seamlessly from concept to completion. His expertise in construction processes and materials brings practicality and feasibility to our most ambitious designs.",
-    imageSrc: "/images/team/VinayShidling.png"
+    imageSrc: "https://raw.githubusercontent.com/GauravShidling/shreenda-architects/main/src/assets/team/VinayShidling.png"
   }
 ]; 
