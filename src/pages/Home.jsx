@@ -13,7 +13,7 @@ const Home = () => {
       {/* Hero Section */}
       <Hero 
         title="Transforming Spaces, Creating Experiences"
-        subtitle="Shreendha Architects blends innovative design with functionality to create spaces that inspire. We transform visions into reality through sustainable architecture."
+        subtitle="Shreenda Architects blends innovative design with functionality to create spaces that inspire. We transform visions into reality through sustainable architecture."
         buttonText="Explore Our Projects"
         buttonLink="/projects"
         imageSrc="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1470&auto=format&fit=crop"
@@ -24,13 +24,13 @@ const Home = () => {
         <div className="container-custom">
           <SectionTitle 
             title="Innovative Architecture Firm"
-            subtitle="Shreendha Architects is a full-service architectural firm committed to excellence in design and client satisfaction. We create spaces that resonate with purpose and beauty."
+            subtitle="Shreenda Architects is a full-service architectural firm committed to excellence in design and client satisfaction. We create spaces that resonate with purpose and beauty."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div>
               <p className="text-gray-700 mb-6">
-                Founded in 2005, Shreendha Architects has grown into a team of dedicated professionals who bring expertise and passion to every project. We believe that great architecture goes beyond aesthetics – it enhances lives and contributes positively to communities and the environment.
+                Founded in 2005, Shreenda Architects has grown into a team of dedicated professionals who bring expertise and passion to every project. We believe that great architecture goes beyond aesthetics – it enhances lives and contributes positively to communities and the environment.
               </p>
               <p className="text-gray-700 mb-6">
                 Our collaborative approach ensures that each project is a true reflection of our clients' needs and aspirations, balanced with our commitment to innovative and sustainable design solutions.

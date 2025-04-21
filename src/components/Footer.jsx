@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../assets/Shreendha Architects Logo.jpg';
+import logo from '../assets/Shreenda Architects Logo.jpg';
 
 const Footer = () => {
   return (
@@ -8,12 +8,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and About */}
           <div className="col-span-1 md:col-span-1">
-            <Link to="/" className="flex items-center space-x-3 mb-4">
-              <img src={logo} alt="Shreendha Architects Logo" className="h-10 w-auto" />
-            </Link>
-            <p className="text-gray-400 text-sm mt-2">
-              Transforming spaces into architectural masterpieces since 2017. We blend aesthetics with functionality.
-            </p>
+            <div className="flex items-center">
+              <img src={logo} alt="Shreenda Architects Logo" className="h-10 w-auto" />
+              <div className="ml-3">
+                <h2 className="text-lg font-bold text-white">Shreenda Architects</h2>
+                <p className="text-gray-300 text-sm">Transforming Spaces. Creating Experiences.</p>
+              </div>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -61,7 +62,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} Shreendha Architects. All rights reserved. Est. 2017</p>
+          <p>&copy; {new Date().getFullYear()} Shreenda Architects. All rights reserved. Est. 2017</p>
         </div>
       </div>
     </footer>

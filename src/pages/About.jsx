@@ -7,9 +7,9 @@ const About = () => {
     <div>
       {/* Hero Section */}
       <Hero 
-        title="About Shreendha Architects"
-        subtitle="We blend innovative design with functionality to create spaces that inspire and endure."
-        imageSrc="https://images.unsplash.com/photo-1531973576160-7125cd663d86?q=80&w=1470&auto=format&fit=crop"
+        title="About Shreenda Architects"
+        subtitle="We're a team of passionate architects and designers dedicated to creating exceptional spaces that inspire and endure."
+        imageSrc="https://images.unsplash.com/photo-1567449303078-57ad995bd17a?q=80&w=1470&auto=format&fit=crop"
       />
       
       {/* Our Story */}

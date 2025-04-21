@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import SectionTitle from '../components/SectionTitle';
 import ProjectCard from '../components/ProjectCard';
 import { projects } from '../data/projects';
+import heroImage from '../assets/projects/residential/Res1.jpeg';
 
 const Projects = () => {
   const [filter, setFilter] = useState('All');
@@ -21,7 +22,7 @@ const Projects = () => {
       <Hero 
         title="Our Projects"
         subtitle="Explore our diverse portfolio of architectural designs across various sectors."
-        imageSrc="/src/assets/projects/residential/Res1.jpeg"
+        imageSrc={heroImage}
       />
       
       {/* Projects Gallery */}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logo from '../assets/Shreendha Architects Logo.jpg';
+import logo from '../assets/Shreenda Architects Logo.jpg';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,8 +22,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <img src={logo} alt="Shreendha Architects Logo" className="h-10 w-auto" />
-            <span className="text-xl font-heading font-bold text-primary">Shreendha Architects</span>
+            <img src={logo} alt="Shreenda Architects Logo" className="h-10 w-auto" />
+            <span className="text-xl font-heading font-bold text-primary">Shreenda Architects</span>
           </Link>
 
           {/* Desktop Navigation */}
