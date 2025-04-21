@@ -37,16 +37,24 @@ const ContactForm = () => {
 
   const validatePhone = (phone) => {
     if (!phone.trim()) return ''; // Phone is optional
+    
+    // First check if there are any alphabetic characters
+    if (/[a-zA-Z]/.test(phone)) {
+      return 'Phone number cannot contain letters';
+    }
+    
     // Only allow digits, spaces, parentheses, dashes, and plus sign
     const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
     if (!phoneRegex.test(phone)) {
       return 'Please enter a valid phone number';
     }
+    
     // Ensure there are at least 10 digits in the phone number
     const digitsOnly = phone.replace(/\D/g, '');
     if (digitsOnly.length < 10 || digitsOnly.length > 15) {
       return 'Phone number must have 10-15 digits';
     }
+    
     return '';
   };
 
@@ -108,7 +116,7 @@ const ContactForm = () => {
 
     try {
       // Send form data to Formspree
-      const response = await fetch('https://formspree.io/f/mleqabaw', {
+      const response = await fetch('https://formspree.io/f/xqaqzbwa', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
