@@ -37,9 +37,15 @@ const ContactForm = () => {
 
   const validatePhone = (phone) => {
     if (!phone.trim()) return ''; // Phone is optional
-    const phoneRegex = /^\+?[0-9]{10,15}$/;
-    if (!phoneRegex.test(phone.replace(/[\s()-]/g, ''))) {
+    // Only allow digits, spaces, parentheses, dashes, and plus sign
+    const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
+    if (!phoneRegex.test(phone)) {
       return 'Please enter a valid phone number';
+    }
+    // Ensure there are at least 10 digits in the phone number
+    const digitsOnly = phone.replace(/\D/g, '');
+    if (digitsOnly.length < 10 || digitsOnly.length > 15) {
+      return 'Phone number must have 10-15 digits';
     }
     return '';
   };
@@ -80,7 +86,7 @@ const ContactForm = () => {
     return !Object.values(newErrors).some(error => error);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validate all fields
@@ -94,36 +100,59 @@ const ContactForm = () => {
       return;
     }
 
-    // Simulate form submission
+    // Set status to pending
     setFormStatus({
       status: 'pending',
       message: 'Sending your message...'
     });
 
-    // Mock API call delay
-    setTimeout(() => {
+    try {
+      // Send form data to Formspree
+      const response = await fetch('https://formspree.io/f/mleqabaw', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      if (response.ok) {
+        // Success
+        setFormStatus({
+          status: 'success',
+          message: 'Thank you! Your message has been sent successfully.'
+        });
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+        
+        // Reset errors
+        setErrors({
+          name: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+      } else {
+        // Error
+        setFormStatus({
+          status: 'error',
+          message: 'There was a problem sending your message. Please try again.'
+        });
+      }
+    } catch (error) {
+      // Network error
       setFormStatus({
-        status: 'success',
-        message: 'Thank you! Your message has been sent successfully.'
+        status: 'error',
+        message: 'Network error. Please check your connection and try again.'
       });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
-      
-      // Reset errors
-      setErrors({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-      });
-    }, 1500);
+    }
   };
 
   // Handle blur event for validation as user moves between fields
@@ -238,6 +267,7 @@ const ContactForm = () => {
                 value={formData.phone}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                placeholder="e.g. +1 (123) 456-7890"
                 className={`w-full px-4 py-2 border ${errors.phone ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-accent`}
               />
               {errors.phone && (
