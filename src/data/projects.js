@@ -1,4 +1,4 @@
-// Project data
+ // Project data
 // Import images to ensure they're properly processed by Vite
 import complex1 from '../assets/projects/commercial-complex/Complex1.jpg';
 import complex2 from '../assets/projects/commercial-complex/Complex2.jpeg';
@@ -12,109 +12,109 @@ import venue1 from '../assets/projects/commercial-event-spaces/Venue1.jpeg';
 export const projects = [
   {
     id: 1,
-    title: "Azure Skyline Tower",
+    title: "Upcoming Commercial Complex in Koppikar road, Hubli",
     category: "Commercial (Complex)",
-    location: "New York, NY",
+    location: "Hubli, Karnataka",
     year: 2023,
-    description: "A 45-story office building with a distinctive curved glass facade that maximizes natural light and provides panoramic views of the city. The tower incorporates green spaces at various levels and utilizes sustainable materials and energy-efficient systems. The design features a double-skin facade that improves thermal performance and reduces energy consumption by 30% compared to conventional buildings.",
+    description: "A modern commercial complex designed to foster collaboration between businesses. The space features open atriums, shared conference facilities, and a sustainable design that reduces energy consumption while providing a comfortable work environment. The innovative spatial organization promotes interaction between different companies while maintaining privacy where needed.",
     imageSrc: complex1,
     featured: true,
     gallery: [
       complex1
     ],
-    details: {
-      area: "75,000 sq.m",
-      client: "Skyline Developments Inc.",
-      services: "Architectural Design, Interior Design, Landscape Design",
-      awards: "AIA Design Excellence Award 2023",
-      sustainability: "LEED Platinum Certified, 30% energy reduction, rainwater harvesting systems, green roof terraces"
-    }
+    // details: {
+    //   area: "75,000 sq.m",
+    //   client: "Skyline Developments Inc.",
+    //   services: "Architectural Design, Interior Design, Landscape Design",
+    //   awards: "AIA Design Excellence Award 2023",
+    //   sustainability: "LEED Platinum Certified, 30% energy reduction, rainwater harvesting systems, green roof terraces"
+    // }
   },
   {
     id: 2,
-    title: "Metropolitan Business Hub",
+    title: "Apoorva Trade Center",
     category: "Commercial (Complex)",
-    location: "Chicago, IL",
+    location: "Hubli, Karnataka",
     year: 2022,
-    description: "A modern commercial complex designed to foster collaboration between businesses. The space features open atriums, shared conference facilities, and a sustainable design that reduces energy consumption while providing a comfortable work environment. The innovative spatial organization promotes interaction between different companies while maintaining privacy where needed.",
+    description: "Giving this 58 year old(DESAI CHAMBERS) commercial structure a new look.This exquisite building exterior is a result of our teams unwavering dedication to crafting unique and impactful designs that stand the test of time.From the bold lines to jextoposition of boxes every detail is carefully considered to ensure harmonious blend of form and function",
     imageSrc: complex2,
     featured: false,
     gallery: [
       complex2
     ],
-    details: {
-      area: "30,000 sq.m",
-      client: "Urban Core Developers",
-      services: "Architectural Design, Space Planning, Sustainability Consulting",
-      awards: "Chicago Architectural Excellence Award 2022",
-      sustainability: "LEED Gold Certified, solar roof panels, high-efficiency HVAC systems, passive cooling design"
-    }
+    // details: {
+    //   area: "30,000 sq.m",
+    //   client: "Urban Core Developers",
+    //   services: "Architectural Design, Space Planning, Sustainability Consulting",
+    //   awards: "Chicago Architectural Excellence Award 2022",
+    //   sustainability: "LEED Gold Certified, solar roof panels, high-efficiency HVAC systems, passive cooling design"
+    // }
   },
   {
     id: 3,
-    title: "Harmony Residence",
+    title: "Shri Hari Nivas",
     category: "Residential",
-    location: "Los Angeles, CA",
+    location: "Hubli, Karnataka",
     year: 2022,
-    description: "A modern residential complex designed with a focus on community living. The development includes shared gardens, recreational areas, and incorporates eco-friendly features like rainwater harvesting and solar panels. The architectural language balances privacy and community, creating spaces for interaction while ensuring each unit maintains its sense of home.",
+    description: "An Ode to Elegance and Sophistication. ✨Every corner is designed with care, where beauty meets functionality.Embrace the art of interior design that transforms spaces into a symphony of style and comfort.",
     imageSrc: res1,
     featured: false,
     gallery: [
       res1
     ],
-    details: {
-      area: "25,000 sq.m (120 units)",
-      client: "West Coast Residential Group",
-      services: "Master Planning, Architectural Design, Landscape Architecture",
-      awards: "Residential Design Award of Merit 2022",
-      sustainability: "Net-zero energy design, community gardens, grey water recycling system"
-    }
+    // details: {
+    //   area: "25,000 sq.m (120 units)",
+    //   client: "West Coast Residential Group",
+    //   services: "Master Planning, Architectural Design, Landscape Architecture",
+    //   awards: "Residential Design Award of Merit 2022",
+    //   sustainability: "Net-zero energy design, community gardens, grey water recycling system"
+    // }
   },
   {
     id: 4,
-    title: "Serene Living Apartments",
+    title: "Serene Living ",
     category: "Residential",
-    location: "Seattle, WA",
+    location: "Hubli, Karnataka",
     year: 2021,
-    description: "A luxury apartment complex that balances private and communal spaces. Each unit offers panoramic views while the building's amenities include rooftop gardens, fitness facilities, and environmentally-conscious construction methods. The design responds to the Pacific Northwest climate with covered outdoor spaces and ample natural light to counter the region's gloomy days.",
+    description: "The minimalist modern facade of the Residence showcases material planes stacked on each other, and the projections that form a visual connect on different levels.",
     imageSrc: res2,
     featured: true,
     gallery: [
       res2
     ],
-    details: {
-      area: "18,500 sq.m (80 units)",
-      client: "Pacific Habitats LLC",
-      services: "Architectural Design, Interior Design, Landscape Design",
-      awards: "Northwest Design Innovation Award 2021",
-      sustainability: "Passive house standards, green roof system, locally-sourced materials, rainwater collection"
-    }
+    // details: {
+    //   area: "18,500 sq.m (80 units)",
+    //   client: "Pacific Habitats LLC",
+    //   services: "Architectural Design, Interior Design, Landscape Design",
+    //   awards: "Northwest Design Innovation Award 2021",
+    //   sustainability: "Passive house standards, green roof system, locally-sourced materials, rainwater collection"
+    // }
   },
   {
     id: 5,
-    title: "Artisan Brew Café",
+    title: "Drnk Lab",
     category: "Commercial (Cafe)",
-    location: "Austin, TX",
+    location: "Hubli, Karnataka",
     year: 2021,
-    description: "A modern café designed with a warm, inviting atmosphere. The space features locally-sourced materials, custom furniture, and an open layout that encourages social interaction while maintaining a cozy ambiance. The interior design showcases the coffee-making process with a visible roasting area and brew bar, creating an educational experience for visitors.",
+    description: "The detailed amalgamation of contemporary trends like pine, metal, open ac ducts, wall art in combination with with raw shade of grey creates a space that professes a sense of rustic chic.",
     imageSrc: cafe1,
     featured: false,
     gallery: [
       cafe1
     ],
-    details: {
-      area: "350 sq.m",
-      client: "Artisan Coffee Roasters",
-      services: "Interior Design, Custom Furniture Design, Branding Integration",
-      awards: "Hospitality Design Award 2021",
-      sustainability: "Reclaimed wood elements, energy-efficient appliances, composting program, zero-waste initiatives"
-    }
+    // details: {
+    //   area: "350 sq.m",
+    //   client: "Artisan Coffee Roasters",
+    //   services: "Interior Design, Custom Furniture Design, Branding Integration",
+    //   awards: "Hospitality Design Award 2021",
+    //   sustainability: "Reclaimed wood elements, energy-efficient appliances, composting program, zero-waste initiatives"
+    // }
   },
   {
     id: 6,
-    title: "Urban Grind Coffee House",
+    title: "Puzzles Cafe",
     category: "Commercial (Cafe)",
-    location: "Portland, OR",
+    location: "Hubli, Karnataka",
     year: 2020,
     description: "A stylish café that combines industrial elements with natural materials. The design emphasizes sustainability with reclaimed wood features, energy-efficient lighting, and a layout that maximizes natural light throughout the day. The space transforms from a quiet morning workspace to a vibrant evening social hub with flexible seating arrangements and adaptable lighting systems.",
     imageSrc: cafe2,
@@ -122,33 +122,33 @@ export const projects = [
     gallery: [
       cafe2
     ],
-    details: {
-      area: "280 sq.m",
-      client: "Urban Grind Collective",
-      services: "Adaptive Reuse Design, Interior Architecture, Lighting Design",
-      awards: "Small Business Design Excellence 2020",
-      sustainability: "Repurposed industrial building, living wall installation, water-saving fixtures, locally-sourced materials"
-    }
+    // details: {
+    //   area: "280 sq.m",
+    //   client: "Urban Grind Collective",
+    //   services: "Adaptive Reuse Design, Interior Architecture, Lighting Design",
+    //   awards: "Small Business Design Excellence 2020",
+    //   sustainability: "Repurposed industrial building, living wall installation, water-saving fixtures, locally-sourced materials"
+    // }
   },
   {
     id: 7,
-    title: "Luminous Event Pavilion",
+    title: "Trilok Lawns",
     category: "Commercial (Event Spaces)",
-    location: "Boston, MA",
+    location: "Hubli, Karnataka",
     year: 2023,
-    description: "A versatile event space designed to host everything from corporate gatherings to wedding receptions. The pavilion features flexible partitioning, state-of-the-art acoustics, and dramatic lighting design that can transform the atmosphere for any occasion. The transparent façade connects indoor and outdoor spaces while providing stunning views of the surrounding landscape.",
+    description: "The ideology behind the design was to fuse the outdoor elements into the design, and the presence of nature around was so strong that indoor and outdoor got integrated effortlessly, almost every space opening in three directions is connecting with the landscape all around.The combination of flex stone with metal jaalis and the blend of landscape with soft touch of lighting, creates experience that gives lawn and entire space a premium and timeless feel.",
     imageSrc: venue1,
     featured: true,
     gallery: [
       venue1
     ],
-    details: {
-      area: "1,200 sq.m",
-      client: "Boston Events Corporation",
-      services: "Architectural Design, Acoustic Engineering, Lighting Design",
-      awards: "Innovative Venue Design Award 2023",
-      sustainability: "Smart building management system, solar shading, high-performance glazing, natural ventilation system"
-    }
+    // details: {
+    //   area: "1,200 sq.m",
+    //   client: "Boston Events Corporation",
+    //   services: "Architectural Design, Acoustic Engineering, Lighting Design",
+    //   awards: "Innovative Venue Design Award 2023",
+    //   sustainability: "Smart building management system, solar shading, high-performance glazing, natural ventilation system"
+    // }
   }
 ];
 
