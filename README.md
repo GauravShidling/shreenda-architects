@@ -4,7 +4,7 @@ A modern, responsive portfolio website for an architecture firm that showcases t
 
 [Live Demo](https://gauravshidling.github.io/shreenda-architects/)
 
-![Shreenda Architects Website Screenshot](public/images/webpage-preview.png)
+![Shreenda Architects Website Screenshot](./public/images/webpage-preview.png)
 
 ## ✅ Project Requirements & Implementation
 
