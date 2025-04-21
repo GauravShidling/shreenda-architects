@@ -213,9 +213,3 @@ shreenda-architects/
 - [Formspree](https://formspree.io/) - Form submission
 - [Google Maps API](https://developers.google.com/maps) - Maps integration
 - [GitHub Pages](https://pages.github.com/) - Hosting
-
-## 🔗 Additional Resources
-
-- [Design Mockups](https://figma.com) - Link to design files
-- [API Documentation](https://formspree.io/documentation) - Formspree documentation
-- [Project Planner](https://notion.so) - Project planning documents 
