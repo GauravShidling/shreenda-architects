@@ -9,10 +9,46 @@ const ContactForm = () => {
     message: ''
   });
 
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+
   const [formStatus, setFormStatus] = useState({
     status: null,
     message: ''
   });
+
+  // Validation functions
+  const validateName = (name) => {
+    if (!name.trim()) return 'Name is required';
+    if (name.trim().length < 2) return 'Name must be at least 2 characters';
+    return '';
+  };
+
+  const validateEmail = (email) => {
+    if (!email.trim()) return 'Email is required';
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return 'Please enter a valid email address';
+    return '';
+  };
+
+  const validatePhone = (phone) => {
+    if (!phone.trim()) return ''; // Phone is optional
+    const phoneRegex = /^\+?[0-9]{10,15}$/;
+    if (!phoneRegex.test(phone.replace(/[\s()-]/g, ''))) {
+      return 'Please enter a valid phone number';
+    }
+    return '';
+  };
+
+  const validateMessage = (message) => {
+    if (!message.trim()) return 'Message is required';
+    if (message.trim().length < 10) return 'Message should be at least 10 characters';
+    return '';
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,16 +56,40 @@ const ContactForm = () => {
       ...prev,
       [name]: value
     }));
+
+    // Clear the specific error when user starts typing again
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      name: validateName(formData.name),
+      email: validateEmail(formData.email),
+      phone: validatePhone(formData.phone),
+      message: validateMessage(formData.message)
+    };
+
+    setErrors(newErrors);
+
+    // Return true if no errors (all error strings are empty)
+    return !Object.values(newErrors).some(error => error);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Simple validation
-    if (!formData.name || !formData.email || !formData.message) {
+    // Validate all fields
+    const isValid = validateForm();
+    
+    if (!isValid) {
       setFormStatus({
         status: 'error',
-        message: 'Please fill in all required fields.'
+        message: 'Please correct the errors in the form.'
       });
       return;
     }
@@ -55,7 +115,45 @@ const ContactForm = () => {
         subject: '',
         message: ''
       });
+      
+      // Reset errors
+      setErrors({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
     }, 1500);
+  };
+
+  // Handle blur event for validation as user moves between fields
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    
+    // Validate the specific field
+    let error = '';
+    
+    switch (name) {
+      case 'name':
+        error = validateName(value);
+        break;
+      case 'email':
+        error = validateEmail(value);
+        break;
+      case 'phone':
+        error = validatePhone(value);
+        break;
+      case 'message':
+        error = validateMessage(value);
+        break;
+      default:
+        break;
+    }
+    
+    setErrors(prev => ({
+      ...prev,
+      [name]: error
+    }));
   };
 
   return (
@@ -101,9 +199,12 @@ const ContactForm = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-                required
+                onBlur={handleBlur}
+                className={`w-full px-4 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-accent`}
               />
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+              )}
             </div>
             
             <div>
@@ -116,9 +217,12 @@ const ContactForm = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-                required
+                onBlur={handleBlur}
+                className={`w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-accent`}
               />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+              )}
             </div>
           </div>
           
@@ -133,8 +237,12 @@ const ContactForm = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+                onBlur={handleBlur}
+                className={`w-full px-4 py-2 border ${errors.phone ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-accent`}
               />
+              {errors.phone && (
+                <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+              )}
             </div>
             
             <div>
@@ -161,10 +269,13 @@ const ContactForm = () => {
               name="message"
               value={formData.message}
               onChange={handleChange}
+              onBlur={handleBlur}
               rows={5}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-              required
+              className={`w-full px-4 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-accent`}
             ></textarea>
+            {errors.message && (
+              <p className="mt-1 text-sm text-red-600">{errors.message}</p>
+            )}
           </div>
           
           <div>
