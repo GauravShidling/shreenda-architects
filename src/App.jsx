@@ -1,42 +1,53 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
-import ProjectDetail from './pages/ProjectDetail';
 import Contact from './pages/Contact';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
-import './App.css';
+import Footer from './components/Footer';
+
+const PrivateRoute = ({ children }) => {
+  const { currentUser } = useAuth();
+  return currentUser ? children : <Navigate to="/login" />;
+};
+
+const PublicRoute = ({ children }) => {
+  const { currentUser } = useAuth();
+  return !currentUser ? children : <Navigate to="/" />;
+};
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen flex flex-col">
+        <div className="flex flex-col min-h-screen">
           <Navbar />
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/projects" element={<Projects />} />
-              <Route path="/projects/:id" element={<ProjectDetail />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route 
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                } 
-              />
+              <Route path="/dashboard" element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              } />
+              <Route path="/login" element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              } />
+              <Route path="/register" element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>
+              } />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

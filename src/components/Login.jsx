@@ -1,34 +1,34 @@
-import { useState } from 'react';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from '../firebase';
+import { useState, useEffect } from 'react';
+import { signInWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { auth, googleProvider } from '../firebase';
 import { useNavigate, Link } from 'react-router-dom';
+import { getDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate('/');
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
     
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      
-      // Check if the user is an admin, and redirect accordingly
-      if (userCredential.user.email === 'admin@shreenda.com' || 
-          userCredential.user.email === 'gauravshidling@gmail.com') {
-        navigate('/dashboard'); // Redirect admin to dashboard
-      } else {
-        navigate('/'); // Redirect regular users to home page
-      }
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       console.error("Login error:", error);
-      // Use user-friendly error messages
       if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
         setError('Invalid email or password. Please try again.');
       } else if (error.code === 'auth/user-not-found') {
@@ -40,41 +40,50 @@ const Login = () => {
       } else {
         setError('An error occurred during sign in. Please try again later.');
       }
-    } finally {
-      setLoading(false);
     }
   };
 
-  // Google Sign In function
-  const signInWithGoogle = async () => {
-    setError('');
-    setGoogleLoading(true);
-    
+  const handleGoogleSignIn = async () => {
     try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
+      setError('');
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
       
-      // Check if the user is an admin, and redirect accordingly
-      if (result.user.email === 'admin@shreenda.com' || 
-          result.user.email === 'gauravshidling@gmail.com') {
-        navigate('/dashboard'); // Redirect admin to dashboard
-      } else {
-        navigate('/'); // Redirect regular users to home page
+      // Check if user exists in Firestore
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, 'users', user.uid), {
+          email: user.email,
+          displayName: user.displayName,
+          createdAt: serverTimestamp(),
+          role: 'user'
+        });
       }
     } catch (error) {
-      console.error("Google sign in error:", error);
-      // Use user-friendly error messages
-      if (error.code === 'auth/popup-closed-by-user') {
-        setError('Sign in was cancelled. Please try again.');
-      } else if (error.code === 'auth/popup-blocked') {
-        setError('Sign in popup was blocked by your browser. Please enable popups for this site.');
-      } else if (error.code === 'auth/account-exists-with-different-credential') {
-        setError('An account already exists with the same email address but different sign-in credentials.');
-      } else {
-        setError('An error occurred during Google sign in. Please try again later.');
+      console.error('Google Sign-In Error:', error);
+      
+      let errorMessage = 'An error occurred during Google sign in. Please try again later.';
+      
+      switch (error.code) {
+        case 'auth/popup-closed-by-user':
+          errorMessage = 'Sign-in was cancelled. Please try again.';
+          break;
+        case 'auth/network-request-failed':
+          errorMessage = 'Network error. Please check your internet connection.';
+          break;
+        case 'auth/popup-blocked':
+          errorMessage = 'Sign-in popup was blocked. Please allow popups for this site.';
+          break;
+        case 'auth/unauthorized-domain':
+          errorMessage = 'This domain is not authorized for Google Sign-In. Please contact support.';
+          break;
+        case 'auth/operation-not-allowed':
+          errorMessage = 'Google Sign-In is not enabled. Please contact support.';
+          break;
       }
-    } finally {
-      setGoogleLoading(false);
+      
+      setError(errorMessage);
     }
   };
 
@@ -89,7 +98,7 @@ const Login = () => {
         {error && (
           <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg flex items-start" role="alert">
             <svg className="w-5 h-5 mr-2 text-red-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zm-1 9a1 1 0 01-1-1v-4a1 1 0 112 0v4a1 1 0 01-1 1z" clipRule="evenodd"></path>
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path>
             </svg>
             <span>{error}</span>
           </div>
@@ -150,10 +159,9 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              Sign in
             </button>
           </div>
         </form>
@@ -170,8 +178,7 @@ const Login = () => {
           
           <div className="mt-6">
             <button
-              onClick={signInWithGoogle}
-              disabled={googleLoading}
+              onClick={handleGoogleSignIn}
               className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
             >
               <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24" width="24" height="24">
@@ -182,7 +189,7 @@ const Login = () => {
                   <path fill="#EA4335" d="M -14.754 43.989 C -12.984 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z"/>
                 </g>
               </svg>
-              {googleLoading ? 'Signing in with Google...' : 'Sign in with Google'}
+              Sign in with Google
             </button>
           </div>
         </div>
