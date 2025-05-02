@@ -23,44 +23,22 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    if (isProfileMenuOpen) setIsProfileMenuOpen(false);
   };
 
   const toggleProfileMenu = () => {
-    console.log("Profile menu toggle clicked");
     setIsProfileMenuOpen(!isProfileMenuOpen);
+    if (isMenuOpen) setIsMenuOpen(false);
   };
 
-  // Enhanced sign out function
-  function handleSignOut(e) {
-    // Prevent default action and stop event propagation
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    
-    console.log("Sign out function called");
-    
-    // Close the profile menu first
-    setIsProfileMenuOpen(false);
-    
-    // Then handle the sign out process
+  const handleSignOut = async () => {
     try {
-      // Use the signOut method from AuthContext
-      signOut()
-        .then(() => {
-          console.log("Sign out successful from Navbar");
-          // Force state update for UI
-          refreshAuthState();
-          // Force immediate navigation to home page
-          navigate('/', { replace: true });
-        })
-        .catch(error => {
-          console.error("Sign out error:", error);
-        });
-    } catch (e) {
-      console.error("Error in sign out process:", e);
+      await signOut();
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
     }
-  }
+  };
 
   // Close profile menu when clicking outside
   useEffect(() => {
