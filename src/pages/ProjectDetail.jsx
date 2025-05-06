@@ -1,20 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { projects } from '../data/projects';
+import { useProjects } from '../contexts/ProjectsContext';
 import SectionTitle from '../components/SectionTitle';
+import { AdvancedImage } from '@cloudinary/react';
+import cld from '../config/cloudinary';
 
 const ProjectDetail = () => {
   const { id } = useParams();
-  const [project, setProject] = useState(null);
+  const { projects } = useProjects();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [project, setProject] = useState(null);
 
   useEffect(() => {
     // Find the project by ID
-    const foundProject = projects.find(p => p.id === parseInt(id));
+    const foundProject = projects.find(p => p.id === id);
     setProject(foundProject);
     // Reset image index when project changes
     setCurrentImageIndex(0);
-  }, [id]);
+  }, [id, projects]);
+
+  // Extract the public ID from the Cloudinary URL
+  const getPublicId = (url) => {
+    if (!url) return null;
+    const parts = url.split('/');
+    const filename = parts[parts.length - 1];
+    return filename.split('.')[0];
+  };
 
   if (!project) {
     return (
@@ -30,16 +41,20 @@ const ProjectDetail = () => {
     );
   }
 
+  const imageUrls = Array.isArray(project.imageUrls) ? project.imageUrls : [project.imageUrl].filter(Boolean);
+
   return (
     <div>
       {/* Project Header */}
       <div className="bg-gray-900 py-24 relative">
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
-            src={project.imageSrc}
-            alt={project.title}
-            className="w-full h-full object-cover opacity-30"
-          />
+          {imageUrls[0] && (
+            <AdvancedImage
+              cldImg={cld.image(getPublicId(imageUrls[0]))}
+              alt={project.title}
+              className="w-full h-full object-cover opacity-30"
+            />
+          )}
         </div>
         <div className="container-custom relative z-10">
           <span className="text-amber-300 text-sm uppercase tracking-wider mb-2 inline-block">{project.category}</span>
@@ -63,32 +78,36 @@ const ProjectDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Left Column - Image Gallery */}
             <div>
-              <div className="bg-gray-100 rounded-lg overflow-hidden mb-4">
-                <img
-                  src={project.gallery[currentImageIndex]}
-                  alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                  className="w-full h-96 object-cover"
-                />
-              </div>
-              {/* Thumbnails */}
-              {project.gallery.length > 1 && (
-                <div className="flex gap-3 mt-4">
-                  {project.gallery.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`border-2 rounded overflow-hidden ${
-                        index === currentImageIndex ? 'border-accent' : 'border-transparent'
-                      }`}
-                    >
-                      <img
-                        src={image}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="w-16 h-16 object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
+              {imageUrls.length > 0 && (
+                <>
+                  <div className="bg-gray-100 rounded-lg overflow-hidden mb-4">
+                    <AdvancedImage
+                      cldImg={cld.image(getPublicId(imageUrls[currentImageIndex]))}
+                      alt={`${project.title} - Image ${currentImageIndex + 1}`}
+                      className="w-full h-96 object-cover"
+                    />
+                  </div>
+                  {/* Thumbnails */}
+                  {imageUrls.length > 1 && (
+                    <div className="flex gap-3 mt-4">
+                      {imageUrls.map((image, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentImageIndex(index)}
+                          className={`border-2 rounded overflow-hidden ${
+                            index === currentImageIndex ? 'border-accent' : 'border-transparent'
+                          }`}
+                        >
+                          <AdvancedImage
+                            cldImg={cld.image(getPublicId(image))}
+                            alt={`Thumbnail ${index + 1}`}
+                            className="w-16 h-16 object-cover"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
@@ -118,35 +137,8 @@ const ProjectDetail = () => {
                     <span className="font-medium w-32">Year:</span>
                     <span className="text-gray-700">{project.year}</span>
                   </li>
-                  {project.details && (
-                    <>
-                      <li className="flex">
-                        <span className="font-medium w-32">Area:</span>
-                        <span className="text-gray-700">{project.details.area}</span>
-                      </li>
-                      <li className="flex">
-                        <span className="font-medium w-32">Client:</span>
-                        <span className="text-gray-700">{project.details.client}</span>
-                      </li>
-                      <li className="flex flex-col sm:flex-row">
-                        <span className="font-medium w-32">Services:</span>
-                        <span className="text-gray-700">{project.details.services}</span>
-                      </li>
-                      <li className="flex flex-col sm:flex-row">
-                        <span className="font-medium w-32">Awards:</span>
-                        <span className="text-gray-700">{project.details.awards}</span>
-                      </li>
-                    </>
-                  )}
                 </ul>
               </div>
-
-              {project.details && project.details.sustainability && (
-                <div className="mb-8 p-4 bg-green-50 rounded-lg border border-green-100">
-                  <h3 className="text-xl font-bold mb-2 text-green-800">Sustainability Features</h3>
-                  <p className="text-green-700">{project.details.sustainability}</p>
-                </div>
-              )}
 
               <Link to="/projects" className="btn btn-outline">
                 Back to Projects
@@ -172,11 +164,13 @@ const ProjectDetail = () => {
               .map(relatedProject => (
                 <div key={relatedProject.id} className="group relative overflow-hidden rounded-lg shadow-md">
                   <Link to={`/projects/${relatedProject.id}`}>
-                    <img 
-                      src={relatedProject.imageSrc} 
-                      alt={relatedProject.title} 
-                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
+                    {relatedProject.imageUrls?.[0] && (
+                      <AdvancedImage
+                        cldImg={cld.image(getPublicId(relatedProject.imageUrls[0]))}
+                        alt={relatedProject.title}
+                        className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                     <div className="absolute bottom-0 left-0 p-6 text-white">
                       <h3 className="text-xl font-bold mb-1">{relatedProject.title}</h3>
